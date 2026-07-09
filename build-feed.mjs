@@ -110,8 +110,9 @@ function vendorCode(p) {
     const cat = (p.categories || []).find(c => [603,604,663,661,634,332].includes(c.id)) || (p.categories || [])[0];
     const catId = cat ? cat.id : 603;
     if (cat) cats[catId] = cat.name;
-    const priceLine = price ? `Цена от ${price} ₽, изготавливается под заказ, точную стоимость рассчитывает менеджер.` : '';
-    const desc = [clean(p.short_description || p.description), `Тип: ${it.type}.`, it.syn, priceLine, priceZone(price)]
+    const priceLine = price ? `Цена от ${price} ₽. Изготавливается на заказ по индивидуальным размерам, в наличии не держится, точную стоимость рассчитывает менеджер.` : 'Изготавливается на заказ, стоимость рассчитывает менеджер.';
+    // priceLine + тип В НАЧАЛЕ: B24U обрезает описание оффера, хвост срезается — важное держим спереди
+    const desc = [priceLine, `Тип: ${it.type}.`, it.syn, priceZone(price), clean(p.short_description || p.description)]
       .filter(Boolean).join(' ');
     offers.push({
       id: p.id, available: p.is_in_stock !== false,

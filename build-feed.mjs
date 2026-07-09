@@ -132,7 +132,7 @@ function vendorCode(p) {
   const offXml = offers.map(o => `    <offer id="${o.id}" available="${o.available}">
       <name>${xmlEsc(o.name)}</name>
       <url>${xmlEsc(o.url)}</url>
-      <price>${o.price}</price>
+      <price from="true">${o.price}</price>
       <currencyId>RUR</currencyId>
       <categoryId>${o.catId}</categoryId>
       <picture>${xmlEsc(o.picture)}</picture>

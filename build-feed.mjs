@@ -110,7 +110,8 @@ function vendorCode(p) {
     const cat = (p.categories || []).find(c => [603,604,663,661,634,332].includes(c.id)) || (p.categories || [])[0];
     const catId = cat ? cat.id : 603;
     if (cat) cats[catId] = cat.name;
-    const desc = [clean(p.short_description || p.description), `Тип: ${it.type}.`, it.syn, priceZone(price)]
+    const priceLine = price ? `Цена от ${price} ₽, изготавливается под заказ, точную стоимость рассчитывает менеджер.` : '';
+    const desc = [clean(p.short_description || p.description), `Тип: ${it.type}.`, it.syn, priceLine, priceZone(price)]
       .filter(Boolean).join(' ');
     offers.push({
       id: p.id, available: p.is_in_stock !== false,
@@ -132,7 +133,6 @@ function vendorCode(p) {
   const offXml = offers.map(o => `    <offer id="${o.id}" available="${o.available}">
       <name>${xmlEsc(o.name)}</name>
       <url>${xmlEsc(o.url)}</url>
-      <price from="true">${o.price}</price>
       <currencyId>RUR</currencyId>
       <categoryId>${o.catId}</categoryId>
       <picture>${xmlEsc(o.picture)}</picture>
